@@ -450,7 +450,7 @@ impl RaknetListener {
                     PacketID::Disconnect => {
                         let mut sessions = sessions.lock().await;
                         if sessions.contains_key(&addr) {
-                            sessions[&addr].1.send(buf[..size].to_vec()).await.unwrap();
+                            let _ = sessions[&addr].1.send(buf[..size].to_vec()).await;
                             sessions.remove(&addr);
                         }
                     }
